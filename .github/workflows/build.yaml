@@ -1,6 +1,6 @@
 name: Build/release
 env:  
-  UPDATE_CHANNEL: "#"
+  UPDATE_CHANNEL: "beta"
 on: push
 
 jobs:
