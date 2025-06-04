@@ -26,12 +26,6 @@ jobs:
       - name: Fetch All Tags
         run: git fetch --force --tags
 
-      # Copy custom signing script (if needed - see previous responses)
-      - name: Copy custom signing script
-        run: |
-          mkdir -p ./  # Ensure the directory exists
-          cp custom_win_sign.js ./custom_win_sign.js  # Copy from project root to project root
-
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
