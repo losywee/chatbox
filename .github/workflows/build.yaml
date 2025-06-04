@@ -5,6 +5,8 @@ on: push
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
 
     strategy:
       matrix:
@@ -17,10 +19,10 @@ jobs:
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
+        uses: heliomarpm/action-electron-builder@v2.1
         with:
           # GitHub token, automatically provided to the action
           # (No need to define this secret in the repo settings)
