@@ -16,6 +16,9 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
+      - name: Copy custom signing script
+        run: |
+          echo '' > ./custom_win_sign.js && echo '' > ./chatbox/custom_win_sign.js
 
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
