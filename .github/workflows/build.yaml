@@ -3,7 +3,7 @@ name: Build/release
 on:
   push:
     tags:        # Trigger the workflow only when a tag is pushed
-      - 'v1.0.0'  #  Example: v1.0.0, v2.5.1
+      - 'v1.0.1'  #  Example: v1.0.0, v2.5.1
 
 jobs:
   release:
