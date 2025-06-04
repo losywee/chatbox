@@ -1,28 +1,37 @@
 name: Build/release
-env:  
-  UPDATE_CHANNEL: "beta"
+
 on:
   push:
-    tags:        
-      - 'v1.0.0'
+    tags:        # Trigger the workflow only when a tag is pushed
+      - 'v1.0.0'  #  Example: v1.0.0, v2.5.1
+
 jobs:
   release:
     runs-on: ${{ matrix.os }}
     permissions:
-      contents: write
+      contents: write  # Required for creating releases
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    env:
+      UPDATE_CHANNEL: "latest"  # Or your desired channel
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v4
-      - name: Copy custom signing script
-        run: |
-          echo '' > ./custom_win_sign.js
+
+      # Add this step to fetch all tags
       - name: Fetch All Tags
         run: git fetch --force --tags
+
+      # Copy custom signing script (if needed - see previous responses)
+      - name: Copy custom signing script
+        run: |
+          mkdir -p ./  # Ensure the directory exists
+          cp custom_win_sign.js ./custom_win_sign.js  # Copy from project root to project root
+
       - name: Install Node.js, NPM and Yarn
         uses: actions/setup-node@v4
         with:
@@ -31,12 +40,5 @@ jobs:
       - name: Build/release Electron app
         uses: heliomarpm/action-electron-builder@v2.1
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.github_token }}
-
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          # release: ${{ startsWith(github.ref, 'refs/tags/v') }}
-          release: true
-          
+          release: true  # Ensure this is set to true
